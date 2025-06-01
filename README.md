@@ -1,29 +1,18 @@
 # 🚖 NYC Taxi Data: Exploratory and Predictive Modeling
 
-Using **Apache Spark** and over a decade of NYC Yellow Taxi trip data from 2014 to 2024, this project features several phases, including large-scale exploratory data analysis, the development of a fare prediction model, and sentiment analysis of rider experiences. This comprehensive framework examines patterns in urban mobility, fare structures, and customer satisfaction by integrating structured trip records with unstructured textual feedback. The result is a comprehensive perspective on the operational and experiential dimensions of New York City's taxi ecosystem.
+Using **Apache Spark** and over a decade of NYC Yellow Taxi trip data from 2014 to 2024, this project features several phases, including large-scale exploratory data analysis (EDA), the development of a fare prediction model, and sentiment analysis of rider experiences. This comprehensive framework examines patterns in urban mobility, fare structures, and customer satisfaction by integrating structured trip records with unstructured textual feedback. The result is a comprehensive perspective on the operational and experiential dimensions of New York City's taxi ecosystem.
 
 ---
 
-## 📌 Project Overview
+## ⚙️ Exploratory Data Analysis
 
-This repository provides a Spark-based exploratory data analysis (EDA) of the NYC Yellow Taxi dataset. The analysis focuses on understanding:
+### a. Overview
+As part of drafting the initial scope of research for this project, the group conducted exploratory data analysis (EDA) on the NYC Yellow Taxi dataset, focusing on trip records from 2014 to 2024. The purpose of this analysis was to surface patterns, anomalies, and emerging themes that could guide the formulation of relevant research questions. By examining trip frequency, fare structures, tipping behavior, and operational trends across time and geography, we developed a foundational understanding of urban mobility dynamics. These insights directly informed the later stages of the project, including fare prediction modeling and sentiment analysis.
 
-- Trip patterns
-- Fare structures
-- Tipping behavior
-- Operational trends
-- Urban mobility insights over the past decade
+### b. Environment Setup
+Because the dataset is relatively large (>12GB), initial exploration was conducted using **Apache Spark** and **PySpark**, configured within a Jupyter Notebook environment running on the SDSC Cluster with a distributed setup.
 
----
-
-## ⚙️ Approach
-
-### 1. Environment Setup
-
-- Apache Spark and PySpark configured within a Jupyter Notebook environment
-- Enabled with distributed setup and runs only in SDSC Cluster
-
-### 2. Data Engineering
+### c. Data Engineering
 
 - **Data Ingestion**: NYC Yellow Taxi trip data (2014–2024, all months) in Parquet format
 - **Feature Engineering**:
@@ -33,7 +22,7 @@ This repository provides a Spark-based exploratory data analysis (EDA) of the NY
   - Removal of invalid trips (e.g., 0 distance/fare)
   - Filtering outliers and noisy records
 
-### 3. Analysis Components
+### Analysis Components
 
 #### 📅 Temporal Analysis
 - Hourly, daily, and monthly trip trends
@@ -50,20 +39,12 @@ This repository provides a Spark-based exploratory data analysis (EDA) of the NY
 - Distance/duration categorization (short, medium, long)
 - Temporal effects on trip length
 
-#### 🗺️ Geospatial Analysis *(Planned/Future Work)*
-- Pickup/dropoff clustering
-- High-density zones and airport corridors
-
----
-
 ## 📊 Visualization Highlights
 
 - Hourly and weekly trip distribution
 - Fare vs. distance scatter plots
 - Tip percentage histograms and time-of-day analysis
 - Correlation heatmaps of trip features
-
----
 
 ## ❓ Key Exploratory Questions
 
@@ -83,8 +64,6 @@ This repository provides a Spark-based exploratory data analysis (EDA) of the NY
 - What share of rides are short (<2 mi), medium (2–10 mi), and long (>10 mi)?
 
 ---
-
-
 
 ## 🚕📈 Model 1: Fare Prediction Model
 
@@ -254,14 +233,6 @@ This project uses publicly available NYC Yellow Taxi data published by the NYC T
   ```
 
 - **File Format**: Parquet (columnar, efficient for Spark)
-
----
-
-## 📈 Future Enhancements
-
-- Interactive dashboard using Plotly Dash
-- Advanced geospatial analysis using H3 or GeoPandas
-- Prediction Models using ML for predicting Tips/Fares/Future usage patterns, expected demand etc
 
 ---
 
