@@ -206,6 +206,12 @@ Our tuned LightGBM regressor (Test RMSE: $2.66, MAE: $1.91, R²: 0.9371) deliver
 As an additional validation step, we trained a version of the model using only 2019–2023 data and tested it on 2024. Despite never seeing 2024 data during training, it achieved similar performance (RMSE: 2.98, MAE: 1.88, R²: 0.9215). This further supports the model’s ability to generalize to future conditions using its current features and tuning.
 
 ---
+
+## 💸 Model 2: Fare Prediction Model
+### a. Overview 
+Update here
+
+---
 ## 📂 Repository Structure
 
 ```text
@@ -261,13 +267,13 @@ This project uses publicly available NYC Yellow Taxi data published by the NYC T
 
 ## 👩‍💻 Authors
 
-This project is developed by students at **UC San Diego** as part of 232-R Group Project Spring Semester:
+This project is developed by students at **UC San Diego** as part of 232-R Group Project Spring 2025 Semester. Each student within the group shared responsibilities on every milestone of the project, including feedback, model building, review, and analysis. The main collaborations made towards this project is as follows:
 
-- **Harsh Arya** — harya@ucsd.edu  
-- **Gabrielle Despaigne** — gdespaigne@ucsd.edu  
-- **Zack Mosley** — zmosley@ucsd.edu  
-- **Camila Paik** — capaik@ucsd.edu  
-- **Raghav Vasappanavara** — rvasappanavara@ucsd.edu
+- **Harsh Arya** (harya@ucsd.edu) - Created Model 2, sentiment analysis of fare tipping. Provided write-up of model performance and results. 
+- **Gabrielle Despaigne** (gdespaigne@ucsd.edu) - Review of and editing the readme with each milestone update.
+- **Zack Mosley** (zmosley@ucsd.edu) - Created Model 1, fare prediction model. Provided write-up of model performance and results. 
+- **Camila Paik** (capaik@ucsd.edu) - Writing the readme and milestone submission on behalf of the group.
+- **Raghav Vasappanavara** (rvasappanavara@ucsd.edu) - Headed Exploratory Data Analysis and provided assistance with development of Models 1 and 2.
 
 ---
 
