@@ -243,8 +243,8 @@ This project is developed by students at **UC San Diego** as part of 232-R Group
 - **Harsh Arya** (harya@ucsd.edu) - Created Model 2, sentiment analysis of fare tipping. Provided write-up of model performance and results. 
 - **Gabrielle Despaigne** (gdespaigne@ucsd.edu) - Review of and editing the readme with each milestone update.
 - **Zack Mosley** (zmosley@ucsd.edu) - Created Model 1, fare prediction model. Provided write-up of model performance and results. 
-- **Camila Paik** (capaik@ucsd.edu) - Writing the readme and milestone submission on behalf of the group.
-- **Raghav Vasappanavara** (rvasappanavara@ucsd.edu) - Headed Exploratory Data Analysis and provided assistance with development of Models 1 and 2.
+- **Camila Paik** (capaik@ucsd.edu) - Wrote abstract, tested initial exploratory XGB model for fare prediction, drafted model 1 readme writeup and submitted milestones on behalf of the group.
+- **Raghav Vasappanavara** (rvasappanavara@ucsd.edu) - Created GitHub repo, headed Exploratory Data Analysis and provided assistance with development of Models 1 and 2.
 
 ---
 
