@@ -1,6 +1,6 @@
 # 🚖 NYC Taxi Data: Exploratory and Predictive Modeling
 
-Using **Apache Spark** and over a decade of NYC Yellow Taxi trip data from 2014 to 2024, this project features several phases, including large-scale exploratory data analysis (EDA), the development of a fare prediction model, and sentiment analysis of rider experiences. This comprehensive framework examines patterns in urban mobility, fare structures, and customer satisfaction by integrating structured trip records with unstructured textual feedback. The result is a comprehensive perspective on the operational and experiential dimensions of New York City's taxi ecosystem.
+Using **Apache Spark** and over a decade of NYC Yellow Taxi trip data from 2014 to 2024, this project features several phases, including large-scale exploratory data analysis (EDA) and the development of a fare prediction model. This comprehensive framework examines patterns in urban mobility, fare structures, and customer satisfaction by integrating structured trip records with unstructured textual feedback. The result is a comprehensive perspective on the operational and experiential dimensions of New York City's taxi ecosystem. By building a high-performing predictive model for taxi fares and uncovering usage patterns over time, our goal was to demonstrate how large-scale data can be translated into actionable insights for transportation stakeholders and urban planners.
 
 ---
 
@@ -186,9 +186,25 @@ As an additional validation step, we trained a version of the model using only 2
 
 ---
 
-## 💸 Model 2: Fare Prediction Model
+## 💬 Discussion
 ### a. Overview 
-Update here
+The final LightGBM model captured key fare drivers well: trip distance and time explained most of the variance, and tolls boosted accuracy for airport and bridge-heavy trips. Residual analysis showed:
+
+- Low variance between train/test → no overfitting
+- Slight bias on long trips or flat-fare zones
+- Still within acceptable real-world prediction bounds
+
+### Shortcomings
+
+- No geospatial features (e.g., pickup/dropoff zones)
+- Did not integrate weather/event data
+- Flat-fare and irregular long trips slightly underpredicted
+
+## ✅ Conclusion
+
+Analyzing over a decade of NYC Yellow Taxi data offered valuable insights into the complexity and variability of real-world transportation systems. While the dataset was consistent in structure, it required substantial preprocessing to address outliers, data quality issues, and nuances such as flat-fare policies and non-standard trips. These challenges emphasized the importance of thoughtful data engineering when working with large-scale, semi-structured data.
+
+Patterns in rider behavior, such as tipping trends and fare distributions, were both predictable and contextually influenced, highlighting how human factors and city dynamics shape mobility data. Ultimately, this dataset provided an opportunity to bridge data science with urban analytics, and it highlighted the importance of scalable tools, careful validation, and critical thinking in developing predictive solutions for real-world applications in transportation and urban planning.
 
 ---
 ## 📂 Repository Structure
@@ -213,12 +229,6 @@ EDA: https://github.com/rvasappa-ucsd/nyc-taxi-eda/blob/main/nyc_taxi_eda.ipynb
 
 Model 1: https://github.com/rvasappa-ucsd/nyc-taxi-eda/blob/Milestone3/model_1.ipynb
 
-### Model 2, Sentiment Analysis
-
-Model 2: coming soon
-
----
-
 ## 📎 Data Source
 
 This project uses publicly available NYC Yellow Taxi data published by the NYC Taxi & Limousine Commission (TLC).
@@ -240,11 +250,11 @@ This project uses publicly available NYC Yellow Taxi data published by the NYC T
 
 This project is developed by students at **UC San Diego** as part of 232-R Group Project Spring 2025 Semester. Each student within the group shared responsibilities on every milestone of the project, including feedback, model building, review, and analysis. The main collaborations made towards this project is as follows:
 
-- **Harsh Arya** (harya@ucsd.edu) - Created Model 2, sentiment analysis of fare tipping. Provided write-up of model performance and results. 
+- **Harsh Arya** (harya@ucsd.edu) - Created Model 2, sentiment analysis of fare tipping. Reviewed models and writeups before submission. 
 - **Gabrielle Despaigne** (gdespaigne@ucsd.edu) - Review of and editing the readme with each milestone update.
-- **Zack Mosley** (zmosley@ucsd.edu) - Created Model 1, fare prediction model. Provided write-up of model performance and results. 
-- **Camila Paik** (capaik@ucsd.edu) - Wrote abstract, tested initial exploratory XGB model for fare prediction, drafted model 1 readme writeup and submitted milestones on behalf of the group.
-- **Raghav Vasappanavara** (rvasappanavara@ucsd.edu) - Created GitHub repo, headed Exploratory Data Analysis and provided assistance with development of Models 1 and 2.
+- **Zack Mosley** (zmosley@ucsd.edu) - Created Model 1, fare prediction model. Provided write-up of model performance and results. Reviewed models and writeups before submission. 
+- **Camila Paik** (capaik@ucsd.edu) - Wrote abstract, tested initial exploratory XGB model for fare prediction, drafted model 1 and project conclusion writeup on readme document, and submitted milestones on behalf of the group.
+- **Raghav Vasappanavara** (rvasappanavara@ucsd.edu) - Created GitHub repo, headed Exploratory Data Analysis and provided assistance with development of Models 1 and 2. Reviewed models and writeups before submission. 
 
 ---
 
