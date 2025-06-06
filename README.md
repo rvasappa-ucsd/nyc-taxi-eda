@@ -187,7 +187,7 @@ As an additional validation step, we trained a version of the model using only 2
 ---
 
 ## 💬 Discussion
-### a. Overview 
+
 The final LightGBM model captured key fare drivers well: trip distance and time explained most of the variance, and tolls boosted accuracy for airport and bridge-heavy trips. Residual analysis showed:
 
 - Low variance between train/test → no overfitting
