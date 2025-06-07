@@ -187,21 +187,158 @@ Our tuned LightGBM regressor (Test RMSE: $2.66, MAE: $1.91, R²: 0.9371) deliver
 
 As an additional validation step, we trained a version of the model using only 2019–2023 data and tested it on 2024. Despite never seeing 2024 data during training, it achieved similar performance (RMSE: 2.98, MAE: 1.88, R²: 0.9215). This further supports the model’s ability to generalize to future conditions using its current features and tuning.
 
+## 🚕📈 Model 2: Sentiment Analysis Model
+
+### a. Overview 
+The goal of this model is to accurately predict sentiment by way of tip percentage for NYC Yellow Taxi rides from 2020 to 2024 based on key trip features. Though we never got to train the model on the cluster a smaller scale test version of the model was trained and tested on the 2023 dataset.
+
+### b. Preprocessing & Feature Engineering
+To ensure data quality and minimize the impact of erroneous or extreme outlier values, we applied a strict set of filters.
+
+- **Fare Amount:** Must be greater than \$3 (NYC minimum base fare) and less than \$200.
+- **Tip Amount:** Cannot be negative.
+- **Tip Percentage (`tip_pct`):** Must be between 0 and 100.
+- **RatecodeID:** Only standard metered trips (RatecodeID = 1) were included.
+- **Trip Time (`trip_time_minutes`):** Must be between 0 and 800 minutes.
+- **Tolls Amount:** Must be between \$0 and \$50.
+- **Trip Distance:** Must be greater than 0 and less than 35 miles.
+
+These filters remove invalid, erroneous, or outlier records, ensuring that our analyses and models reflect realistic NYC taxi operations. 
+| **Filter**        | **Rows Before** | **Rows After** | **% Remaining** | **% Removed** |
+|-------------------|-----------------|---------------|-----------------|--------------|
+| Distance Filter   | 3,066,766       | 2,785,198     | 90.82%          | 9.18%        |
+
+![Image](https://github.com/user-attachments/assets/dfc5c2d0-6a88-4f64-8d1a-c91a79456c57)
+Figure 4: Histogram of tip percentages of fare. (0% tip accounted for about 21% of total data volume)
+
+
+As part of the preprocessing pipeline, we engineered several new features to better capture temporal patterns, ride dynamics, and rider behavior. The following features were added to the dataset:
+
+- **tip_pct**: Tip percentage of fare amount (`tip_amount` / `fare_amount` * 100)
+- **trip_time_minutes**: Total trip duration in minutes, calculated from pickup and dropoff timestamps
+- **pickup_hour**: Hour of day when the trip started (0–23)
+- **hour_sin, hour_cos**: Sine and cosine transforms of the pickup hour, encoding the cyclical nature of time (useful for machine learning models)
+- **day_of_week**: Day of week of pickup (1=Sunday, 7=Saturday)
+- **is_weekend**: Indicator for whether the trip occurred on a weekend (1 if Saturday or Sunday, 0 otherwise)
+- **fare_per_min**: Fare amount divided by trip duration, indicating cost per minute
+- **fare_per_mile**: Fare amount divided by trip distance, indicating cost per mile
+
+These engineered features help capture important patterns in the data (e.g., time-of-day effects, weekday vs. weekend dynamics, fare efficiency) and enhance the performance of downstream predictive models.
+
+![Image](https://github.com/user-attachments/assets/903e8d9a-0394-4501-a5ed-7726ddaf0b55)
+Figure 5: Feature importance
+
+The bump at around 10 miles was investigated. Within this range the most common pickup and drop off location was LaGuardia Airport which epxlains the hike in tip percentages
+
+### c. Modeling
+
+Originally we tried to use a regressor to predict tip percentage directly but could not achieve an RMSE less than 8.5 which when binned in no-tip, low-tip, and high-tip produced unsatisfactory results. Instead we opped for a direct classifier.
+
+
+For the second phase of our analysis, we focused on predicting **tipping behavior** by categorizing rides into three classes based on tip percentage:  
+- No tip  
+- Low tip  
+- High tip
+
+This approach enables us to interpret rider sentiment and generosity, using tip percentage as a proxy for satisfaction.
+
+**Class Definition & Preprocessing**
+
+- We sampled 10% of the filtered dataset to enable efficient model development.
+- Only nonzero tip rides were considered for splitting, with the median (50th percentile) tip percentage—**26.61%**—used as a cutoff.
+- To ensure clear class boundaries, we dropped a 2% “gray zone” around the median.
+- Final classes:
+    - **0:** No tip
+    - **1:** Low tip (tip_pct between 0 and just below the median)
+    - **2:** High tip (tip_pct above the median)
+
+**Feature Engineering & Inputs**
+
+The model leveraged both raw and engineered features to capture the ride context and passenger characteristics:
+- Numerical: `passenger_count`, `trip_distance`, `trip_time_minutes`, `extra`, `tolls_amount`, `congestion_surcharge`, `airport_fee`, `fare_per_min`, `fare_per_mile`, `hour_sin`, `hour_cos`, `day_of_week`, `is_weekend`
+- Categorical: `payment_type`, `VendorID` (one-hot encoded)
+
+**Model Training**
+
+We trained a multiclass LightGBM classifier on the engineered dataset, using a **stratified 80/20 train/validation split**. The model used balanced class weights to address class imbalance and optimize for multi-class log loss.
+
+- **Framework:** LightGBM (scikit-learn interface)
+- **Objective:** Multiclass classification (3 classes)
+- **Class weighting:** Balanced
+
+
+
+### d. Model Evaluation Results
+#### Sentiment Bucketization (Tip Percentage)
+
+- **Cutpoint for bucket (nonzero tips):**  
+  Median = 26.61%
+
+- **Rows after dropping 2% gap around median:**  
+  249,383
+
+**Bucket distribution (% of kept rides):**
+
+| Sentiment Class | % of Rides   |
+|:---------------:|:------------:|
+| 0               | 23.90%       |
+| 1               | 37.43%       |
+| 2               | 38.68%       |
+
+
+
+#### 3-Class Model Accuracy
+
+- **Overall accuracy:** 0.794
+
+| Class | Precision | Recall | F1-Score | Support |
+|-------|-----------|--------|----------|---------|
+| 0     | 1.00      | 0.87   | 0.93     | 11,923  |
+| 1     | 0.77      | 0.70   | 0.73     | 18,761  |
+| 2     | 0.72      | 0.84   | 0.77     | 19,193  |
+
+| Metric         | Value |
+|----------------|-------|
+| Accuracy       | 0.79  |
+| Macro avg F1   | 0.81  |
+| Weighted avg F1| 0.80  |
+
+
+
+### e. Opportunities for Improvement
+
+Due to resource constraints, we were unable to train the tip percentage classification model on the full dataset using the SDSC cluster. Our current results are based on a 10% sample and should be viewed as a proof of concept. Future work could focus on scaling the modeling pipeline for distributed training, incorporating additional external features (such as weather or event data), and refining class boundaries for even more robust sentiment prediction.
+
+
+
+### f. Final Thoughts
+
+Our LightGBM-based tip percentage classifier demonstrates that rider tipping sentiment can be predicted with high accuracy using features derived from trip details and passenger context. Achieving an overall validation accuracy of 79% and strong precision/recall across all sentiment classes, this model serves as a proof of concept for real-time rider sentiment analysis. Despite being trained on a 10% data sample, the results indicate clear separability between non-tippers, low tippers, and high tippers.
+
+Scaling this approach to the full dataset and cluster environment, as well as incorporating additional features, could further improve robustness and generalizability. Nonetheless, these results highlight the value of using interpretable, engineered features for classifying rider sentiment foundational for future work in feedback prediction, targeted service improvements, and data-driven policy insights.
+
+
+
+
+
 ---
 
 ## 💬 Discussion
 
-The final LightGBM model captured key fare drivers well: trip distance and time explained most of the variance, and tolls boosted accuracy for airport and bridge-heavy trips. Residual analysis showed:
+The final LightGBM fare prediction model captured key fare drivers well: trip distance and time explained most of the variance, and tolls boosted accuracy for airport and bridge-heavy trips. Residual analysis showed:
 
 - Low variance between train/test → no overfitting
 - Slight bias on long trips or flat-fare zones
 - Still within acceptable real-world prediction bounds
 
+The sentiment classification model similarly demonstrated strong performance, with 79% overall accuracy in predicting tip-based sentiment. Key features such as trip duration, time of day, and fare efficiency contributed meaningfully to classification. Tip behavior proved to be a useful proxy for rider satisfaction, and the model effectively separated non-tippers, low tippers, and high tippers.
+
 ### Shortcomings
 
 - No geospatial features (e.g., pickup/dropoff zones)
 - Did not integrate weather/event data
-- Flat-fare and irregular long trips slightly underpredicted
+- Flat-fare and irregular long trips slightly underpredicted (fare)
+- Tip model was trained on only 10% of the dataset
 
 ## ✅ Conclusion
 
@@ -211,7 +348,7 @@ Patterns in rider behavior, such as tipping trends and fare distributions, were 
 
 New York City’s geography, commuter behavior, traffic patterns, and fare policies all directly affect the structure and variability of this data. Ultimately, this dataset provided an opportunity to bridge data science with urban analytics, and it highlighted the importance of scalable tools, careful validation, and critical thinking in developing predictive solutions for real-world applications in transportation and urban planning. 
 
-If this project were extended, future work would focus on incorporating sentiment analysis, external factors such as weather and traffic congestion, as well as geospatial clustering for capturing location specific fare behavior. With additional content-awareness features, the model we developed could evolve into a more sophisticated tool capable of informing not just pricing but also policy, operations, and commuter equity in real time transit systems.
+With the addition of the sentiment classification model, we also demonstrated that rider satisfaction can be inferred from trip data using interpretable, engineered features. Though trained on a sample, the model performed well and showed potential for scaling and real-time sentiment tracking. Future work could enhance both models by incorporating external factors such as weather and traffic congestion, as well as geospatial clustering for capturing location specific fare behavior, and expanding modeling to the full dataset. With additional content-awareness features, the model we developed could evolve into a more sophisticated tool capable of informing not just pricing but also policy, operations, and commuter equity in real time transit systems.
 
 ---
 ## 📂 Repository Structure
@@ -235,6 +372,10 @@ EDA: https://github.com/rvasappa-ucsd/nyc-taxi-eda/blob/main/nyc_taxi_eda.ipynb
 ### Model 1, Fare Prediction Model
 
 Model 1: https://github.com/rvasappa-ucsd/nyc-taxi-eda/blob/Milestone3/model_1.ipynb
+
+### Model 2: Sentiment Analysis Model
+
+https://github.com/rvasappa-ucsd/nyc-taxi-eda/blob/Milestone4/Model_2_Direct_Classification.ipynb
 
 ## 📎 Data Source
 
