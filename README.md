@@ -1,6 +1,9 @@
 # 🚖 NYC Taxi Data: Exploratory and Predictive Modeling
+New York City has one of the most complex transportation networks in the world, making urban mobility a vital concern for the millions of residents who rely on affordable and reliable transit each day. With the rise of app-based ride-share alternatives, traditional taxi services have experienced a noticeable decline in ridership - a trend that has drawn increasing media attention over the past decade. As such, understanding how fare structures, tipping patterns, and service availability influence rider behavior is essential for identifying consumer trends and shaping future transportation policy. Through this project, we aim to provide data-driven insights that can support more equitable pricing strategies, improve service delivery, and enhance commuter satisfaction across New York City's five boroughs.
 
-Using **Apache Spark** and over a decade of NYC Yellow Taxi trip data from 2014 to 2024, this project features several phases, including large-scale exploratory data analysis (EDA) and the development of a fare prediction model. This comprehensive framework examines patterns in urban mobility, fare structures, and customer satisfaction by integrating structured trip records with unstructured textual feedback. The result is a comprehensive perspective on the operational and experiential dimensions of New York City's taxi ecosystem. By building a high-performing predictive model for taxi fares and uncovering usage patterns over time, our goal was to demonstrate how large-scale data can be translated into actionable insights for transportation stakeholders and urban planners.
+Using **Apache Spark** and over a decade of NYC Yellow Taxi trip data from 2014 to 2024, this project features several phases, including large-scale exploratory data analysis (EDA) and the development of a fare prediction model. This comprehensive framework examines patterns in urban mobility, fare structures, and customer satisfaction by integrating structured trip records with unstructured textual feedback. The result is a multi-dimensional perspective on the operational and experiential dimensions of New York City's taxi ecosystem. By building a predictive model for taxi fares and uncovering usage patterns over time, our goal was to demonstrate how large-scale data can be translated into actionable insights for transportation stakeholders and urban planners.
+
+From a broader perspective, this project highlights the value of scalable data science tools in addressing complex real-world problems. Predictive modeling enables more informed decisions about resource allocation, dynamic pricing, and long-term planning. By analyzing historical ride data at scale, we demonstrate how big data infrastructure like **Apache Spark** can uncover patterns that support the design of more efficient and equitable urban transit systems. This approach provides a foundation for evidence-based policy and operational improvements within New York City's evolving mobility landscape.
 
 ---
 
@@ -204,7 +207,13 @@ The final LightGBM model captured key fare drivers well: trip distance and time 
 
 Analyzing over a decade of NYC Yellow Taxi data offered valuable insights into the complexity and variability of real-world transportation systems. While the dataset was consistent in structure, it required substantial preprocessing to address outliers, data quality issues, and nuances such as flat-fare policies and non-standard trips. These challenges emphasized the importance of thoughtful data engineering when working with large-scale, semi-structured data.
 
-Patterns in rider behavior, such as tipping trends and fare distributions, were both predictable and contextually influenced, highlighting how human factors and city dynamics shape mobility data. Ultimately, this dataset provided an opportunity to bridge data science with urban analytics, and it highlighted the importance of scalable tools, careful validation, and critical thinking in developing predictive solutions for real-world applications in transportation and urban planning.
+Patterns in rider behavior, such as tipping trends and fare distributions, were both predictable and contextually influenced, highlighting how human factors and city dynamics shape mobility data. The process of cleaning, transforming, and modeling the data required not only technical skill but also real-world knowledge and awareness. 
+
+Considering New York City’s geography, general commuter behavior, traffic conditions, fare policies (ex: cancellations), etc., all affect the underlying data. This intersection of urban context and data science was key to building a model that can make meaningful predictions.
+
+Ultimately, this dataset provided an opportunity to bridge data science with urban analytics, and it highlighted the importance of scalable tools, careful validation, and critical thinking in developing predictive solutions for real-world applications in transportation and urban planning. 
+
+If this project were extended, future work would focus on incorporating sentiment analysis, external factors such as weather and traffic congestion, as well as geospatial clustering for capturing location specific fare behavior. With additional content-awareness features, the model we developed could evolve into a more sophisticated tool capable of informing not just pricing but also policy, operations, and commuter equity in real time transit systems.
 
 ---
 ## 📂 Repository Structure
@@ -250,9 +259,9 @@ This project uses publicly available NYC Yellow Taxi data published by the NYC T
 
 This project is developed by students at **UC San Diego** as part of 232-R Group Project Spring 2025 Semester. Each student within the group shared responsibilities on every milestone of the project, including feedback, model building, review, and analysis. The main collaborations made towards this project is as follows:
 
-- **Harsh Arya** (harya@ucsd.edu) - Created Model 2, sentiment analysis of fare tipping. Reviewed models and writeups before submission. 
-- **Gabrielle Despaigne** (gdespaigne@ucsd.edu) - Review of and editing the readme with each milestone update.
-- **Zack Mosley** (zmosley@ucsd.edu) - Created Model 1, fare prediction model. Provided write-up of model performance and results. Reviewed models and writeups before submission. 
+- **Harsh Arya** (harya@ucsd.edu) - Created Model 2, sentiment analysis of fare tipping. Reviewed initial abstracts, models, and writeups before each submission. 
+- **Gabrielle Despaigne** (gdespaigne@ucsd.edu) - Reviewed initial abstracts, performed exploratory data analysis, drafted introduction and final writeup of EDA section on readme. 
+- **Zack Mosley** (zmosley@ucsd.edu) - Created Model 1, fare prediction model. Provided readme write-up of model performance and results, reviewed models and writeups before each submission. 
 - **Camila Paik** (capaik@ucsd.edu) - Wrote abstract, tested initial exploratory XGB model for fare prediction, drafted model 1 and project conclusion writeup on readme document, and submitted milestones on behalf of the group.
 - **Raghav Vasappanavara** (rvasappanavara@ucsd.edu) - Created GitHub repo, headed Exploratory Data Analysis and provided assistance with development of Models 1 and 2. Reviewed models and writeups before submission. 
 
