@@ -209,9 +209,7 @@ Analyzing over a decade of NYC Yellow Taxi data offered valuable insights into t
 
 Patterns in rider behavior, such as tipping trends and fare distributions, were both predictable and contextually influenced, highlighting how human factors and city dynamics shape mobility data. The process of cleaning, transforming, and modeling the data required not only technical skill but also real-world knowledge and awareness. 
 
-Considering New York City’s geography, general commuter behavior, traffic conditions, fare policies (ex: cancellations), etc., all affect the underlying data. This intersection of urban context and data science was key to building a model that can make meaningful predictions.
-
-Ultimately, this dataset provided an opportunity to bridge data science with urban analytics, and it highlighted the importance of scalable tools, careful validation, and critical thinking in developing predictive solutions for real-world applications in transportation and urban planning. 
+New York City’s geography, commuter behavior, traffic patterns, and fare policies all directly affect the structure and variability of this data. Ultimately, this dataset provided an opportunity to bridge data science with urban analytics, and it highlighted the importance of scalable tools, careful validation, and critical thinking in developing predictive solutions for real-world applications in transportation and urban planning. 
 
 If this project were extended, future work would focus on incorporating sentiment analysis, external factors such as weather and traffic congestion, as well as geospatial clustering for capturing location specific fare behavior. With additional content-awareness features, the model we developed could evolve into a more sophisticated tool capable of informing not just pricing but also policy, operations, and commuter equity in real time transit systems.
 
@@ -260,7 +258,7 @@ This project uses publicly available NYC Yellow Taxi data published by the NYC T
 This project is developed by students at **UC San Diego** as part of 232-R Group Project Spring 2025 Semester. Each student within the group shared responsibilities on every milestone of the project, including feedback, model building, review, and analysis. The main collaborations made towards this project is as follows:
 
 - **Harsh Arya** (harya@ucsd.edu) - Created Model 2, sentiment analysis of fare tipping. Reviewed initial abstracts, models, and writeups before each submission. 
-- **Gabrielle Despaigne** (gdespaigne@ucsd.edu) - Reviewed initial abstracts, performed exploratory data analysis, drafted introduction and final writeup of EDA section on readme. 
+- **Gabrielle Despaigne** (gdespaigne@ucsd.edu) - Reviewed initial abstracts, exploratory data analysis, drafted introduction section on readme, final edits and review of readme document before submission.
 - **Zack Mosley** (zmosley@ucsd.edu) - Created Model 1, fare prediction model. Provided readme write-up of model performance and results, reviewed models and writeups before each submission. 
 - **Camila Paik** (capaik@ucsd.edu) - Wrote abstract, tested initial exploratory XGB model for fare prediction, drafted model 1 and project conclusion writeup on readme document, and submitted milestones on behalf of the group.
 - **Raghav Vasappanavara** (rvasappanavara@ucsd.edu) - Created GitHub repo, headed Exploratory Data Analysis and provided assistance with development of Models 1 and 2. Reviewed models and writeups before submission. 
