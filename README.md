@@ -325,17 +325,20 @@ Scaling this approach to the full dataset and cluster environment, as well as in
 
 ## 💬 Discussion
 
-The final LightGBM model captured key fare drivers well: trip distance and time explained most of the variance, and tolls boosted accuracy for airport and bridge-heavy trips. Residual analysis showed:
+The final LightGBM fare prediction model captured key fare drivers well: trip distance and time explained most of the variance, and tolls boosted accuracy for airport and bridge-heavy trips. Residual analysis showed:
 
 - Low variance between train/test → no overfitting
 - Slight bias on long trips or flat-fare zones
 - Still within acceptable real-world prediction bounds
 
+The sentiment classification model similarly demonstrated strong performance, with 79% overall accuracy in predicting tip-based sentiment. Key features such as trip duration, time of day, and fare efficiency contributed meaningfully to classification. Tip behavior proved to be a useful proxy for rider satisfaction, and the model effectively separated non-tippers, low tippers, and high tippers.
+
 ### Shortcomings
 
 - No geospatial features (e.g., pickup/dropoff zones)
 - Did not integrate weather/event data
-- Flat-fare and irregular long trips slightly underpredicted
+- Flat-fare and irregular long trips slightly underpredicted (fare)
+- Tip model was trained on only 10% of the dataset
 
 ## ✅ Conclusion
 
@@ -345,7 +348,7 @@ Patterns in rider behavior, such as tipping trends and fare distributions, were 
 
 New York City’s geography, commuter behavior, traffic patterns, and fare policies all directly affect the structure and variability of this data. Ultimately, this dataset provided an opportunity to bridge data science with urban analytics, and it highlighted the importance of scalable tools, careful validation, and critical thinking in developing predictive solutions for real-world applications in transportation and urban planning. 
 
-If this project were extended, future work would focus on incorporating sentiment analysis, external factors such as weather and traffic congestion, as well as geospatial clustering for capturing location specific fare behavior. With additional content-awareness features, the model we developed could evolve into a more sophisticated tool capable of informing not just pricing but also policy, operations, and commuter equity in real time transit systems.
+With the addition of the sentiment classification model, we also demonstrated that rider satisfaction can be inferred from trip data using interpretable, engineered features. Though trained on a sample, the model performed well and showed potential for scaling and real-time sentiment tracking. Future work could enhance both models by incorporating external factors such as weather and traffic congestion, as well as geospatial clustering for capturing location specific fare behavior, and expanding modeling to the full dataset. With additional content-awareness features, the model we developed could evolve into a more sophisticated tool capable of informing not just pricing but also policy, operations, and commuter equity in real time transit systems.
 
 ---
 ## 📂 Repository Structure
@@ -369,6 +372,10 @@ EDA: https://github.com/rvasappa-ucsd/nyc-taxi-eda/blob/main/nyc_taxi_eda.ipynb
 ### Model 1, Fare Prediction Model
 
 Model 1: https://github.com/rvasappa-ucsd/nyc-taxi-eda/blob/Milestone3/model_1.ipynb
+
+### Model 2: Sentiment Analysis Model
+
+https://github.com/rvasappa-ucsd/nyc-taxi-eda/blob/Milestone4/Model_2_Direct_Classification.ipynb
 
 ## 📎 Data Source
 
